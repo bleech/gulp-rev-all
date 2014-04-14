@@ -17,7 +17,7 @@ module.exports = ( function () {
     // Taken from gulp-rev: https://github.com/sindresorhus/gulp-rev
     var revFile = function (filePath) {
 
-        if (fileMap[filePath]) 
+        if (fileMap[filePath])
             return fileMap[filePath];
 
         var contents = fs.readFileSync(filePath).toString();
@@ -69,7 +69,7 @@ module.exports = ( function () {
 
         for (var key in replaceMap) {
             if (!replaceMap[key]) continue;
-            contents = contents.replace(key, replaceMap[key]); 
+            contents = contents.replace(new RegExp(key, 'g'), replaceMap[key]);
         }
 
         file.contents = new Buffer(contents); // Update file contents with new reved references
