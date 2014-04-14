@@ -45,6 +45,15 @@ module.exports = function(options) {
           var base = path.dirname(file.path);
           var oldPath = file.path;
           file.path = path.join(base, filenameReved);
+          if (options.remove) {
+            fs.unlink(oldPath, function(err) {
+              if (err) {
+                gutil.log('gulp-rev-all:', 'Error deleting file [', oldPath, ']', err);
+              } else {
+                gutil.log('gulp-rev-all:', 'Deleted file [', oldPath, ']');
+              }
+            });
+          }
         }
 
         callback(null, file);
