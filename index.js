@@ -9,7 +9,9 @@ var gutil = require('gulp-util');
 module.exports = function(options) {
 
     options = options || {};
-    var first = true;
+    var first = true
+      , ignoreExtensions = [].concat(options.ignoreExtensions)
+      ;
 
     return through.obj(function (file, enc, callback) {
 
@@ -28,7 +30,7 @@ module.exports = function(options) {
             throw new Error('Streams are not supported!');
             callback(null, file);
             return;
-        } 
+        }
 
         // Only process references in these types of files, otherwise we'll corrupt images etc
         switch(path.extname(file.path)) {
@@ -38,9 +40,12 @@ module.exports = function(options) {
                 tools.revReferencesInFile(file, options.rootDir);
         }
 
-        var filenameReved = path.basename(tools.revFile(file.path));
-        var base = path.dirname(file.path);        
-        file.path = path.join(base, filenameReved);
+        if (ignoreExtensions.indexOf(path.extname(file.path)) === -1) {
+          var filenameReved = path.basename(tools.revFile(file.path));
+          var base = path.dirname(file.path);
+          var oldPath = file.path;
+          file.path = path.join(base, filenameReved);
+        }
 
         callback(null, file);
 
