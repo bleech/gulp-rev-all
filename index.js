@@ -37,6 +37,7 @@ module.exports = function(options) {
             case '.js':
             case '.css':
             case '.html':
+            case '.php':
                 tools.revReferencesInFile(file, options.rootDir);
         }
 
