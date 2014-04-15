@@ -32,7 +32,7 @@ module.exports = ( function () {
 
     };
 
-    var revReferencesInFile = function (file, rootDir) {
+    var revReferencesInFile = function (file, rootDir, ignoreExtensions) {
 
         var replaceMap = {};
 
@@ -45,6 +45,8 @@ module.exports = ( function () {
             // Skip if we've already resolved this reference
             if (replaceMap[result[1]] != undefined) continue;
             replaceMap[result[1]] = false;
+            // Skip if extension is ignored
+            if (ignoreExtensions.indexOf(path.extname(result[1])) !== -1) continue;
 
             // In the case where the referenced file is relative to the base path
             if (rootDir) {

@@ -38,7 +38,7 @@ module.exports = function(options) {
             case '.css':
             case '.html':
             case '.php':
-                tools.revReferencesInFile(file, options.rootDir);
+                tools.revReferencesInFile(file, options.rootDir, ignoreExtensions);
         }
 
         if (ignoreExtensions.indexOf(path.extname(file.path)) === -1) {
