@@ -11,6 +11,7 @@ module.exports = function(options) {
     options = options || {};
     var first = true
       , ignoreExtensions = [].concat(options.ignoreExtensions)
+      , ignoreFiles = [].concat(options.ignoreFiles)
       ;
 
     return through.obj(function (file, enc, callback) {
@@ -41,7 +42,7 @@ module.exports = function(options) {
                 tools.revReferencesInFile(file, options.rootDir, ignoreExtensions);
         }
 
-        if (ignoreExtensions.indexOf(path.extname(file.path)) === -1) {
+        if ((ignoreExtensions.indexOf(path.extname(file.path)) === -1) && (ignoreFiles.indexOf(path.basename(file.path)) === -1)) {
           var filenameReved = path.basename(tools.revFile(file.path));
           var base = path.dirname(file.path);
           var oldPath = file.path;
